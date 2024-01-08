@@ -1,11 +1,13 @@
-import React,{ useState, useRef } from "react";
+import React,{ useState, useRef, useContext } from "react";
 import classes from "./AuthForm.module.css";
+import { AuthContext } from "../../store/AuthContext";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const emailInputref = useRef();
   const passwordInputref = useRef();
+  const authctx = useContext(AuthContext)
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -20,10 +22,10 @@ const AuthForm = () => {
       let url;
       if (isLogin) {
         url =
-          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.AUTHKEY}`;
+          `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${process.env.REACT_APP_AUTHKEY}`;
       } else {
         url =
-          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.AUTHKEY}`;
+          `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${process.env.REACT_APP_AUTHKEY}`;
       }
       const res = await fetch(url, {
         method: "POST",
@@ -38,7 +40,8 @@ const AuthForm = () => {
       });
       const data = await res.json();
       if (res.ok) {
-        console.log(data)
+        authctx.login(data.idToken)
+        // console.log(data)
       } else {
         throw new Error(data.error.message)
       }
