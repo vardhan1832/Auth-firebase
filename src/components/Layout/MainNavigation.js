@@ -19,7 +19,7 @@ const MainNavigation = () => {
             <Link to='/profile'>Profile</Link>
           </li>}
           {authCtx.isLoggedIn && <li>
-            <button>Logout</button>
+            <button onClick={()=>authCtx.logout()}>Logout</button>
           </li> } 
         </ul>
       </nav>
