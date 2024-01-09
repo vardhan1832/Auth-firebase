@@ -1,6 +1,6 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { AuthContext } from './store/AuthContext';
-import React,{useContext, useEffect} from 'react';
+import React,{useContext} from 'react';
 import Layout from './components/Layout/Layout';
 import UserProfile from './components/Profile/UserProfile';
 import AuthPage from './pages/AuthPage';
@@ -8,12 +8,6 @@ import HomePage from './pages/HomePage';
 
 function App() {
   const authctx = useContext(AuthContext)
-  useEffect(()=>{
-    let token = localStorage.getItem('token')
-    if(token){
-       authctx.login(JSON.parse(token))
-    }
-  },[authctx])
   return (
     <Layout>
       <Switch>
