@@ -11,9 +11,11 @@ const AuthContextProvider = (props) =>{
     const [token,settoken] = useState(null)
     const userisLoggedIn = !!token
     const loginhandler = (token)=>{
+        localStorage.setItem('token',JSON.stringify(token))
         settoken(token)
     }
     const logouthandler = ()=>{
+        localStorage.removeItem('token')
         settoken(null)
     }
     const contextvalue = {
